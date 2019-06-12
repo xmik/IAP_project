@@ -1,0 +1,21 @@
+version: '2.2'
+services:
+  # Headquarters database
+  hqdb:
+    init: true
+    image: postgres:11.2-alpine
+    # same configuration as here: https://github.com/MagFry/ProjectLanguage/blob/master/ProjectLanguage/settings.py#L79
+    environment:
+      - POSTGRES_PASSWORD=qwerty12345
+      - POSTGRES_DB=IAP_project
+    ports:
+      - 5432:5432
+  # Headquarters Backend
+  hq:
+    init: true
+    image: iap-hq-backend:0.1.0
+    ports:
+      - 8000:8000
+    links:
+      # the container hqdb is known inside hq as: db
+      - hqdb:db

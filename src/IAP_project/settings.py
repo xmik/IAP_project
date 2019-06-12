@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '7jo8vm1_3!b+#__)^-0^1^154ryw=r(8jmejsq_*!3)89n%--n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0", "127.0.0.1", "localhost"]
 
 
 # Application definition
@@ -84,7 +84,7 @@ DATABASES = {
         'NAME': 'IAP_project',
         'USER': 'postgres',
         'PASSWORD': 'qwerty12345',
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
