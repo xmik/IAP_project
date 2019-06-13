@@ -14,3 +14,14 @@ class Employees(models.Model):
 
     def __str__(self):
         return self.first_name
+
+class EmployeesHours(models.Model):
+    employees_hours_id = models.IntegerField()
+    time_period = models.DateField()
+    value = models.IntegerField()
+    employee_id = models.ForeignKey(Employees,on_delete=models.CASCADE)
+
+    def get_EmployeesHours(year, author):
+        url = 'http://api.example.com/books'
+        params = {'year': year, 'author': author}
+        r = requests.get(url, params=params)

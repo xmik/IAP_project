@@ -4,6 +4,7 @@ from rest_framework.parsers import JSONParser
 from .models import Branch_Offices
 from .serializers import Branch_OfficesSerializer
 from pprint import pprint
+from django.core import serializers
 
 @csrf_exempt
 def branch_offices_list(request):
@@ -16,14 +17,12 @@ def branch_offices_list(request):
         return JsonResponse(serializer.data, safe=False)
 
     elif request.method == 'POST':
-
-        print(request)
         data = JSONParser().parse(request)
         serializer = Branch_OfficesSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return JsonResponse(serializer.data, status=201)
-        return JsonResponse(request, status=400)
+        return JsonResponse(request, status=400, safe=False)
 
 @csrf_exempt
 def branch_offices_detail(request, pk):
