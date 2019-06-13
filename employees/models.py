@@ -16,12 +16,11 @@ class Employees(models.Model):
         return self.first_name
 
 class EmployeesHours(models.Model):
-    employees_hours_id = models.IntegerField()
-    time_period = models.DateField()
+    employees_hours_id = models.IntegerField(primary_key=True)
+    start_date = models.DateField()
+    end_date = models.DateField()
     value = models.IntegerField()
     employee_id = models.ForeignKey(Employees,on_delete=models.CASCADE)
 
-    def get_EmployeesHours(year, author):
-        url = 'http://api.example.com/books'
-        params = {'year': year, 'author': author}
-        r = requests.get(url, params=params)
+    def __int__(self):
+        return self.employee_id
