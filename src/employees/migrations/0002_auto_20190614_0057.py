@@ -19,4 +19,9 @@ class Migration(migrations.Migration):
             name='employees_hours_id',
             field=models.IntegerField(primary_key=True, serialize=False),
         ),
+        migrations.AddField(
+            model_name='employees',
+            name='pay',
+            field=models.IntegerField(default=0),
+        ),
     ]

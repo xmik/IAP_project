@@ -1,6 +1,6 @@
 FROM python:3.7.2
 
-RUN pip3.7 install django djangorestframework psycopg2 psycopg2-binary
+RUN pip3.7 install django djangorestframework psycopg2 psycopg2-binary requests
 
 COPY src /usr/src/app
 COPY run.sh /usr/bin/iap-hq-backend-run.sh
