@@ -80,21 +80,21 @@ def employees_hours(request):
     for item in hours:
         dict = item
 
-    employees_hours_id = dict.get('employees_hours_id')
-    start_date = dict.get('start_date')
-    end_date = dict.get('end_date')
-    value = dict.get('value')
-    employee_id = dict.get('employee_id')
+        employees_hours_id = dict.get('employees_hours_id')
+        start_date = dict.get('start_date')
+        end_date = dict.get('end_date')
+        value = dict.get('value')
+        employee_id = dict.get('employee_id')
 
-    movie, created = EmployeesHours.objects.get_or_create(
-        employees_hours_id=employees_hours_id,
-        start_date=start_date,
-        end_date=end_date,
-        value=value,
-        employee_id=employee_id
-    )
-    if created:
-        movie.save()
+        movie, created = EmployeesHours.objects.get_or_create(
+            employees_hours_id=employees_hours_id,
+            start_date=start_date,
+            end_date=end_date,
+            value=value,
+            employee_id=employee_id
+        )
+        if created:
+            movie.save()
 
     #h = EmployeesHours(**dict)
     #h.save()
