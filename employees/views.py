@@ -1,8 +1,8 @@
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from .models import Employees, EmployeesHours
-from .serializers import EmployeesSerializer, EmployeesHoursSerializer
+from .models import Employees, EmployeesHours, EmployeesSalaries
+from .serializers import EmployeesSerializer, EmployeesHoursSerializer, EmployeesSalariesSerializer
 import requests
 from pprint import pprint
 
@@ -71,6 +71,7 @@ def employees_hours_list(request):
         return JsonResponse(request, status=400)
 '''
 
+#synchronization with BO in order to retrieve employee hours
 @csrf_exempt
 def employees_hours(request):
     url = 'http://127.0.0.1:8080/employee_hours/list/'
@@ -108,4 +109,30 @@ def employees_hours(request):
     if request.method == 'GET':
         emp_hours = EmployeesHours.objects.all()
         serializer = EmployeesHoursSerializer(emp_hours, many=True)
+        return JsonResponse(serializer.data, safe=False)
+
+#counting salary for each employ and adding to Salaries table
+def employees_salaries(request):
+    list_of_ids_and_pay = Employees.objects.values_list('employee_id', 'pay')
+    list_of_ids_and_values = EmployeesHours.objects.values_list('employee_id', 'value')
+    dict_salaries = {}
+
+    for (i,j) in zip(list_of_ids_and_pay, list_of_ids_and_values):
+        if i[0] == j[0]:
+            salary = i[1] * j[1]
+            dict_salaries[i[0]] = salary
+
+    movie, created = EmployeesSalaries.objects.get_or_create(
+        employee_salary_id= 1,
+        salary= 12312
+    )
+    if created:
+        movie.save()
+
+    #sal = EmployeesHours(**dict_salaries)
+    #sal.save()
+
+    if request.method == 'GET':
+        emp_sal = EmployeesSalaries.objects.all()
+        serializer = EmployeesSalariesSerializer(emp_sal, many=True)
         return JsonResponse(serializer.data, safe=False)
