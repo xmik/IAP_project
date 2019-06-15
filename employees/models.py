@@ -16,11 +16,11 @@ class Employees(models.Model):
         return self.first_name
 
 class EmployeesHours(models.Model):
-    employees_hours_id = models.IntegerField(primary_key=True)
+    employees_hours_id = models.AutoField(primary_key=True)
     start_date = models.DateField()
     end_date = models.DateField()
     value = models.IntegerField()
-    employee_id = models.ForeignKey(Employees,on_delete=models.CASCADE)
+    employee_id = models.IntegerField()
 
     def __int__(self):
         return self.employee_id
