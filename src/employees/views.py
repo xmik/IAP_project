@@ -6,13 +6,19 @@ from .serializers import EmployeesSerializer, EmployeesHoursSerializer, Employee
 import requests
 from pprint import pprint
 
+@csrf_exempt
+def invalid_employees_list(request):
+    if request.method == 'GET':
+        # bad request
+        return JsonResponse({'error':'bad request, missing parameter: branchOfficeId'}, status=400)
 
 @csrf_exempt
-def employees_list(request):
+def employees_list(request, branchOfficeId):
     """
     List all code snippets, or create a new snippet.
     """
     if request.method == 'GET':
+        # TODO: filter employees by branchOfficeId
         employees = Employees.objects.all()
         serializer = EmployeesSerializer(employees, many=True)
         return JsonResponse(serializer.data, safe=False)
